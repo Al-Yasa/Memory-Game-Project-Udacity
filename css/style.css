@@ -1,3 +1,16 @@
+/****
+    #2196f3 -- blue
+    #db4039 -- orange
+    #ffd700 -- gold
+    #fff -- white
+    #1d1e20 -- dark grey
+    #292929 -- grey
+    #2f2f2f -- light grey
+    rgba(0, 0, 0, 0.2) -- black shadow
+    rgba(255, 0, 0, 0.2) -- red shadow
+    rgba(0, 0, 0, 0.8) -- overlay
+****/
+
 /**** General ****/
 * {
     box-sizing: border-box;
