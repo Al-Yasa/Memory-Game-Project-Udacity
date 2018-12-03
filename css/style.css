@@ -240,3 +240,106 @@ body {
         transform: rotate(360deg);
     }
 }
+
+/**** Modal ****/
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+.hidden {
+    display: none;
+}
+
+#modal {
+    width: 80%;
+    background-color: #292929;
+}
+
+#modal .modal-header {
+    letter-spacing: 2px;
+    text-align: center;
+    margin: 10px 0 0;
+    padding: 5px 10px;
+    font-size: 30px;
+
+}
+
+#modal .modal-score {
+    display: flex;
+    flex-direction: column;
+    padding: 5px 35px;
+}
+
+#modal .modal-score .modal-stars {
+    font-size: 40px;
+    color: #ffd700;
+    text-align: center;
+    margin: 0 0 20px;
+}
+
+#modal .modal-score .modal-stars i:not(:nth-child(2)) {
+    font-size: 30px;
+}
+
+#modal .modal-score .modal-moves,
+#modal .modal-score .modal-hints,
+#modal .modal-score .modal-time {
+    font-size: 18px;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2f2f2f;
+    border-left: 2px solid #fff;
+}
+
+#modal .modal-score .modal-moves span,
+#modal .modal-score .modal-hints span,
+#modal .modal-score .modal-time span {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#modal .modal-buttons {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+#modal .modal-buttons button {
+    height: 50px;
+    width: 50px;
+    font-size: 30px;
+    margin: 0 30px 0;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#modal .modal-buttons button:focus {
+    outline: 0;
+}
+
+#modal .modal-buttons .modal-back {
+    background-color: #db4039;
+    box-shadow: 5px 2px 20px 0 rgba(255, 0, 0, 0.2);
+    border: 2px solid #db4039;
+    color: #fff;
+}
+
+#modal .modal-buttons .modal-replay {
+    padding: 2px 0 0 2px;
+    box-shadow: 5px 2px 20px 0 rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    border: 2px solid #fff;
+    color: #292929;
+}
