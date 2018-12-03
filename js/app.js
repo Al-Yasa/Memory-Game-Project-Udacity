@@ -7,6 +7,10 @@ const NO_MATCH_SOUND = new Audio('audio/nomatch.wav'); // Sound from https://ope
 const HINT_SOUND = new Audio('audio/hint.wav'); // Sound from https://opengameart.org/content/87-clickety-clips (clik87.wav)
 const GAME_WON_SOUND = new Audio('audio/gamewon.mp3'); // Sound from https://opengameart.org/content/completion-sound (completetask_0.mp3)
 
+// Start Menu Variables
+const MENU = document.getElementById('start-menu');
+const MENU_PLAY = document.querySelector('.game-play');
+
 // Deck Variables
 const DECK = document.getElementById('deck');
 
@@ -67,6 +71,11 @@ const MODAL_BACK = document.querySelector('.modal-back');
 const MODAL_REPLAY = document.querySelector('.modal-replay');
 
 /**** Functions ****/
+// Start Menu Functions
+function menuToggle() {
+    MENU.classList.toggle('hidden');
+}
+
 // Deck Functions
 function shuffleDeck() {
 
@@ -368,11 +377,14 @@ function rotateRestart() { // rotate the icon of restart button
 }
 
 /**** logic Start ****/
-shuffleDeck();
-
-setTimeout(() => {
-    startTimer();
-}, 2500);
+MENU_PLAY.addEventListener('click', () => {
+    BTN_CLICK_SOUND.play();
+    shuffleDeck();
+    menuToggle();
+    setTimeout(() => { // wait for cards to show and hide then start timer
+        startTimer();
+    }, 2500);
+});
 
 DECK.addEventListener('click', e => {
     selectCard(e.target);
