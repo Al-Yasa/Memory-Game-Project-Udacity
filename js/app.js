@@ -25,6 +25,10 @@ let shuffledCards = []
 let flippedCards = [];
 let pairsMatched = 0;
 
+// Moves Variables
+const MOVES = document.querySelector('.moves');
+let movesCount = 0;
+
 /**** Functions ****/
 // Deck Functions
 function shuffleDeck() {
@@ -77,6 +81,7 @@ function selectCard(card) {
         addFlippedCard(card); // adds flipped card to the list of already flipped cards
 
         if (flippedCards.length === 2) { // when 2 cards are flipped
+            addMove(); // increase moves counter
             checkMatch(); // check for a match between the two selected cards
         }
     }
@@ -103,6 +108,12 @@ function checkMatch() { // compare the two selected cards
             flippedCards = [];
         }, 1000);
     }
+}
+
+// Moves Functions
+function addMove() { // increase moves and update on the DOM
+    movesCount++;
+    MOVES.innerHTML = movesCount === 1 ? `${movesCount} Move` : `${movesCount} Moves`;
 }
 
 /**** logic Start ****/
