@@ -53,6 +53,18 @@ function shuffleDeck() {
             </li>`);
     });
 
+    setTimeout(() => { // wait for 1/2 second then show cards
+        for (card of DECK.children) {
+            flipCard(card);
+        }
+    }, 500);
+    setTimeout(() => { // hide cards after showing them for 2 seconds
+        for (card of DECK.children) {
+            flipCard(card);
+        }
+        startTimer();
+    }, 2500);
+
 }
 
 // Card Functions
@@ -139,7 +151,17 @@ function removeStars(reason) {
             SECOND_STAR.innerHTML = `<i class="fa fa-star-o"></i>`;
             starsCount--;
         }
+
+    } else if (reason === 'time') { // reduce stars based on the time count
+        if (time === 30 && thirdStarStatus === 'fa fa-star') { // remove third star if time reaches 30 seconds and if it's full
+            THIRD_STAR.innerHTML = `<i class="fa fa-star-o"></i>`;
+            starsCount--;
+        } else if (time === 60 && thirdStarStatus === 'fa fa-star-o' && secondStarStatus === 'fa fa-star') { // remove second star if time reaches 1 minute and if it's full and if thirdStar is empty
+            SECOND_STAR.innerHTML = `<i class="fa fa-star-o"></i>`;
+            starsCount--;
+        }
     }
+
 }
 
 // Moves Functions
@@ -153,6 +175,7 @@ function startTimer() {
     timerOn = true;
     timerId = setInterval(() => { // start timer using setInterval every 1 second
         time++;
+        removeStars('time'); // check to see if removing a star is due
         minutes = Math.floor(time / 60);
         seconds = time % 60;
         TIMER.innerHTML = seconds < 10 ? `0${minutes}:0${seconds}` : `0${minutes}:${seconds}`; // update time on the DOM
@@ -161,8 +184,6 @@ function startTimer() {
 
 /**** logic Start ****/
 shuffleDeck();
-
-startTimer();
 
 DECK.addEventListener('click', e => {
     selectCard(e.target);
