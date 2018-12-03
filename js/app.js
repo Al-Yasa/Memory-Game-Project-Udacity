@@ -237,7 +237,6 @@ function removeStars(reason) {
             starsCount--;
         }
     }
-
 }
 
 function resetStars() { // reset stars and update on The DOM
