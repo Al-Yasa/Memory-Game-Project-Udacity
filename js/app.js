@@ -70,6 +70,21 @@ const MODAL_TIME = document.querySelector('.modal-time');
 const MODAL_BACK = document.querySelector('.modal-back');
 const MODAL_REPLAY = document.querySelector('.modal-replay');
 
+// Keyboard controls variables
+const KEYBOARD_BUTTONS = {
+    enter: 13,
+    esc: 27,
+    spacebar: 32,
+    left: 37,
+    up: 38,
+    right: 39,
+    down: 40,
+    h: 72,
+    r: 82
+};
+let cardGridNumber = 0;
+let oldCardGridNumber;
+
 /**** Functions ****/
 // Start Menu Functions
 function menuToggle() {
@@ -343,6 +358,35 @@ function toggleModal() {
     MODAL.classList.toggle('hidden');
 }
 
+// Keyboard controls functions
+function highlightCard(e) { // highlighting a card on the grid
+    oldCardGridNumber = cardGridNumber;
+    if (e.keyCode === KEYBOARD_BUTTONS.right) {
+        cardGridNumber++;
+    } else if (e.keyCode === KEYBOARD_BUTTONS.left) {
+        cardGridNumber--;
+    } else if (e.keyCode === KEYBOARD_BUTTONS.down) {
+        if (cardGridNumber === 13 || cardGridNumber === 14 || cardGridNumber === 15 || cardGridNumber === 16 ) { // stop player from leaving the grid's lower section
+            return;
+        }
+        cardGridNumber = cardGridNumber + 4;
+    } else if (e.keyCode === KEYBOARD_BUTTONS.up) {
+        if (cardGridNumber === 1 || cardGridNumber === 2 || cardGridNumber === 3 || cardGridNumber === 4 ) { // stop player from leaving the grid's upper section
+            return;
+        }
+        cardGridNumber = cardGridNumber - 4;
+    }
+    if (cardGridNumber < 1) { // stop player from leaving the grid's left section and forces starting position to 1
+        cardGridNumber = 1;
+    } else if (cardGridNumber > 16) { // stop player from leaving the grid's right section
+        cardGridNumber = 16;
+    }
+    if (oldCardGridNumber !== 0) { // unhighlight previously highlighted card
+        DECK.children[oldCardGridNumber - 1].style.border= '';
+    }
+    DECK.children[cardGridNumber - 1].style.border = '2px dashed #fff'; // highlight card
+}
+
 // Game Over Functions
 function gameWon() { // stop the timer ==> TODO: show modal
     stopTimer();
@@ -362,6 +406,7 @@ function restartGame() {
     resetHintsNotify();
     hintCount = 0;
     pairsMatched = 0;
+    cardGridNumber = 0;
     flippedCards = [];
     shuffleDeck();
     setTimeout(() => { // wait for cards to show and hide then start timer
@@ -407,4 +452,26 @@ MODAL_BACK.addEventListener('click', () => {
 MODAL_REPLAY.addEventListener('click', () => { // clicking the replay button hides the modal and restarts the game
     toggleModal();
     restartGame();
+});
+
+document.addEventListener('keydown', (e) => {
+    if (timerOn && (e.keyCode === KEYBOARD_BUTTONS.right || e.keyCode === KEYBOARD_BUTTONS.left || e.keyCode === KEYBOARD_BUTTONS.up || e.keyCode === KEYBOARD_BUTTONS.down)) { // if game is on and if arrow keys are used highlight cards
+        highlightCard(e);
+    }
+    if ((e.keyCode === KEYBOARD_BUTTONS.enter || e.keyCode === KEYBOARD_BUTTONS.spacebar) && timerOn) { // if ENTER or SPACEBAR is pressed and game is on then select a card
+        selectCard(DECK.children[cardGridNumber - 1]);
+    } else if (e.keyCode === KEYBOARD_BUTTONS.h  && timerOn) { // if H is pressed and game is on then use a hint
+        useHint();
+    } else if (e.keyCode === KEYBOARD_BUTTONS.esc && !MODAL.classList.contains('hidden')) { // if esc is pressed and game is done (modal is showing) then hide modal
+        BTN_CLICK_SOUND.play();
+        toggleModal();
+    } else if (e.keyCode === KEYBOARD_BUTTONS.r) {
+        if (!MODAL.classList.contains('hidden')) { // if R is pressed and game is done (modal is showing) then hide modal and restart game
+            toggleModal();
+            restartGame();
+        } else if (MENU.classList.contains('hidden')) { // if R is pressed and player is ingame then restart game and rotate replay button
+            restartGame();
+            rotateRestart();
+        }
+    }
 });
