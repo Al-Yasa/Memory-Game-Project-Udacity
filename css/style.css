@@ -1,0 +1,242 @@
+/**** General ****/
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Coda", cursive;
+    margin: 0;
+    padding: 0;
+    background-color: #292929;
+    color: #fff;
+}
+
+/***** In-Game Content *****/
+.ingame-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+}
+
+/**** Score Panel ****/
+#score-panel {
+    background-color: #2f2f2f;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 15px;
+    padding: 0 5px;
+    height: 40px;
+}
+
+#score-panel .stars {
+    margin: 0;
+    padding: 0;
+    color: #ffd700;
+}
+
+#score-panel .stars li {
+    display: inline-block;
+    list-style: none;
+    font-size: 20px;
+    padding: 0 5px;
+
+}
+#score-panel .stars,
+#score-panel .moves,
+#score-panel .timer {
+    flex: 1;
+}
+
+/**** Deck ****/
+#deck {
+    width: 340px;
+    height: 360px;
+    padding: 16px;
+    background-color: #2f2f2f;
+    border-radius: 10px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+}
+
+#deck .card {
+    height: 65px;
+    width: 65px;
+    background-color: #1d1e20;
+    font-size: 0;
+    color: #1d1e20;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 5px 2px 20px 0 rgba(0, 0, 0, 0.2);
+    transform: rotateY(180deg);
+    transition: transform 0.3s ease-in-out, /* these are seperated because using 'all' causes slow appearing of the dashed border when highlighting a card using keyboard */
+                background 0.3s ease-in-out,
+                font-size 0.3s ease-in-out,
+                color 0.3s ease-in-out;
+}
+
+#deck .card.open {
+    transform: rotateY(0);
+    background-color: #fff;
+    cursor: default;
+}
+
+#deck .card.show {
+    font-size: 17px;
+}
+
+#deck .card.no-match {
+    cursor: default;
+    background-color: #db4039;
+    color: #fff;
+    font-size: 17px;
+    animation: noMatch 0.5s ease-in-out;
+}
+
+@keyframes noMatch {
+    25% {
+        transform: translateX(5px);
+    }
+
+    50% {
+        transform: translateX(-5px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+#deck .card.match {
+    cursor: default;
+    background-color: #2196f3;
+    color: #fff;
+    font-size: 17px;
+    animation: match 0.5s ease-in-out;
+}
+
+@keyframes match {
+    25% {
+        transform: translateY(-5px);
+    }
+
+    50% {
+        transform: translateY(5px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+#deck .card.hint {
+    animation: hint 0.5s ease-in-out;
+    background: #fff;
+}
+
+@keyframes hint {
+    25% {
+        transform: rotate(5deg);
+    }
+
+    75% {
+        transform: rotate(-5deg);
+    }
+
+    100% {
+        transform: rotate(0);
+    }
+}
+
+/**** Tools Panel ****/
+#tools-panel {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    font-size: 15px;
+    padding: 0 5px 10px;
+    height: 40px;
+}
+
+#tools-panel .hint {
+    position: relative;
+    background-color: #1d1e20;
+    box-shadow: 5px 2px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+#tools-panel .hint .notification {
+    position: absolute;
+    top: -30%;
+    right: -30%;
+    height: 30px;
+    width: 30px;
+    font-size: 20px;
+    background-color: #db4039;
+    border-radius: 50% 50% 50% 0;
+    overflow: hidden;
+}
+
+#tools-panel .hint .notification.flash {
+    animation: flash 0.4s;
+}
+
+@keyframes flash {
+    0%,
+    50%,
+    100% {
+        opacity: 1;
+    }
+
+    25%,
+    75% {
+        opacity: 0;
+    }
+}
+
+#tools-panel .restart {
+    background-color: #db4039;
+    box-shadow: 5px 2px 20px 0 rgba(255, 0, 0, 0.2);
+}
+
+#tools-panel .restart,
+#tools-panel .hint {
+    width: 45px;
+    height: 45px;
+    padding-top: 5px;
+    font-size: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#tools-panel .rotate i {
+    transform: rotate(0);
+    animation: rotate 0.5s ease-in-out;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
