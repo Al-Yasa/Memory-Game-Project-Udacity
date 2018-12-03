@@ -1,4 +1,12 @@
 /**** Variables ****/
+// Sound Variables
+const BTN_CLICK_SOUND = new Audio('audio/btnclick.wav'); // Sound from https://opengameart.org/content/menu-selection-click
+const CARD_FLIP_SOUND = new Audio('audio/cardflip.wav'); // Sound from https://opengameart.org/content/click
+const MATCH_SOUND = new Audio('audio/match.wav'); // Sound from https://opengameart.org/content/toom-click
+const NO_MATCH_SOUND = new Audio('audio/nomatch.wav'); // Sound from https://opengameart.org/content/cloud-click
+const HINT_SOUND = new Audio('audio/hint.wav'); // Sound from https://opengameart.org/content/87-clickety-clips (clik87.wav)
+const GAME_WON_SOUND = new Audio('audio/gamewon.mp3'); // Sound from https://opengameart.org/content/completion-sound (completetask_0.mp3)
+
 // Deck Variables
 const DECK = document.getElementById('deck');
 
@@ -77,11 +85,13 @@ function shuffleDeck() {
         for (card of DECK.children) {
             flipCard(card);
         }
+        CARD_FLIP_SOUND.play(); // putting this line of code in here instead of the flipCard function avoids annoying multiple audio plays if the player is playing too fast
     }, 500);
     setTimeout(() => { // hide cards after showing them for 2 seconds
         for (card of DECK.children) {
             flipCard(card);
         }
+        CARD_FLIP_SOUND.play(); // putting this line of code in here instead of the flipCard function avoids annoying multiple audio plays if the player is playing too fast
         startTimer();
     }, 2500);
 
@@ -121,6 +131,8 @@ function selectCard(card) {
     if (card.classList.value === 'card' && flippedCards.length < 2) { // checks if the card is not selected nor is it matched and how many cards are selected
         flipCard(card); // flip selected card
 
+        CARD_FLIP_SOUND.play(); // putting this line of code in here instead of the flipCard function avoids annoying multiple audio plays if the player is playing too fast
+
         addFlippedCard(card); // adds flipped card to the list of already flipped cards
 
         if (flippedCards.length === 2) { // when 2 cards are flipped
@@ -136,6 +148,7 @@ function checkMatch() { // compare the two selected cards
         setTimeout(() => { // wait for 200ms then make selected cards blue
             matchCard(flippedCards[0]);
             matchCard(flippedCards[1]);
+            MATCH_SOUND.play();
             flippedCards = [];
             pairsMatched++;
             if (pairsMatched === 8) { // if all cards are matched then it is game over
@@ -146,6 +159,7 @@ function checkMatch() { // compare the two selected cards
         setTimeout(() => { // wait for 200ms then make selected cards red
             noMatchCard(flippedCards[0]);
             noMatchCard(flippedCards[1]);
+            NO_MATCH_SOUND.play();
         }, 300);
         setTimeout(() => { // wait for 1 second then remove red color from cards and flip them back
             flipCard(flippedCards[0]);
@@ -249,6 +263,7 @@ function oneCardHint() { // hint at the pair of a selected card
     for (card of DECK.children) { // loop through the existing cards on the deck
         if (card.classList.value === 'card' && hintedCard.dataset.name === card.dataset.name) { // if we reach a card that is not selected or matched and if that card is the same as the card we have selected
             hintCard(card); // hint at the card we reached
+            HINT_SOUND.play();
             hintCount++;
             hintedCard = '';
             return;
@@ -263,6 +278,7 @@ function twoCardsHint() { // hint at a pair of cards
         } else if (card.classList.value === 'card' && hintedCard.dataset.name === card.dataset.name) { // if we reach a card that is not matched and if that card is the pair of the hinted card then hint at both cards
             hintCard(hintedCard);
             hintCard(card);
+            HINT_SOUND.play();
             hintCount++;
             hintedCard = '';
             return;
@@ -325,11 +341,13 @@ function gameWon() { // stop the timer ==> TODO: show modal
     fillModal();
     setTimeout(() => { // wait for 1/2 second before showing modal to allow final cards pairing animation
         toggleModal();
+        GAME_WON_SOUND.play();
     }, 500);
 }
 
 // Restart Game Functions
 function restartGame() {
+    BTN_CLICK_SOUND.play();
     resetStars();
     resetMoves();
     resetTimer();
@@ -367,6 +385,7 @@ HINT.addEventListener('click', () => {
 });
 
 MODAL_BACK.addEventListener('click', () => {
+    BTN_CLICK_SOUND.play();
     toggleModal();
 });
 
