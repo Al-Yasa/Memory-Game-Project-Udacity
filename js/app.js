@@ -40,9 +40,14 @@ let timerOn = false;
 let time = 0;
 let timerId;
 
+// Restart Variables
+const RESTART = document.querySelector('.restart');
+
 /**** Functions ****/
 // Deck Functions
 function shuffleDeck() {
+
+    DECK.innerHTML = '';
 
     shuffledCards = shuffleCards(CARDS);
 
@@ -167,10 +172,21 @@ function removeStars(reason) {
 
 }
 
+function resetStars() { // reset stars and update on The DOM
+    starsCount = 3;
+    THIRD_STAR.innerHTML = `<i class="fa fa-star"></i>`;
+    SECOND_STAR.innerHTML = `<i class="fa fa-star"></i>`;
+}
+
 // Moves Functions
 function addMove() { // increase moves and update on the DOM
     movesCount++;
     MOVES.innerHTML = movesCount === 1 ? `${movesCount} Move` : `${movesCount} Moves`;
+}
+
+function resetMoves() { // reset moves and update the DOM
+    movesCount = 0;
+    MOVES.innerHTML = '0 Moves';
 }
 
 // Timer Functions
@@ -190,9 +206,35 @@ function stopTimer() { // stop timer
     timerOn = false;
 }
 
-// Game Over Functions
-function gameWon() { // stop the timer
+function resetTimer() { // stop timer and then reset it
     stopTimer();
+    time = 0;
+    TIMER.innerHTML = '00:00';
+}
+
+// Game Over Functions
+function gameWon() { // stop the timer ==> TODO: show modal
+    stopTimer();
+}
+
+// Restart Game Functions
+function restartGame() {
+    resetStars();
+    resetMoves();
+    resetTimer();
+    pairsMatched = 0;
+    flippedCards = [];
+    shuffleDeck();
+    setTimeout(() => { // wait for cards to show and hide then start timer
+        startTimer();
+    }, 2500);
+}
+
+function rotateRestart() { // rotate the icon of restart button
+    RESTART.classList.toggle('rotate');
+    setTimeout(() => {
+        RESTART.classList.toggle('rotate');
+    }, 500);
 }
 
 /**** logic Start ****/
@@ -200,4 +242,9 @@ shuffleDeck();
 
 DECK.addEventListener('click', e => {
     selectCard(e.target);
+});
+
+RESTART.addEventListener('click', () => { // clicking the restart button restarts the game and spins the icon
+    restartGame();
+    rotateRestart();
 });
