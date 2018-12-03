@@ -34,6 +34,12 @@ let starsCount = 3;
 const MOVES = document.querySelector('.moves');
 let movesCount = 0;
 
+// Timer Variables
+const TIMER = document.querySelector('.timer');
+let timerOn = false;
+let time = 0;
+let timerId;
+
 /**** Functions ****/
 // Deck Functions
 function shuffleDeck() {
@@ -142,8 +148,21 @@ function addMove() { // increase moves and update on the DOM
     MOVES.innerHTML = movesCount === 1 ? `${movesCount} Move` : `${movesCount} Moves`;
 }
 
+// Timer Functions
+function startTimer() {
+    timerOn = true;
+    timerId = setInterval(() => { // start timer using setInterval every 1 second
+        time++;
+        minutes = Math.floor(time / 60);
+        seconds = time % 60;
+        TIMER.innerHTML = seconds < 10 ? `0${minutes}:0${seconds}` : `0${minutes}:${seconds}`; // update time on the DOM
+    }, 1000);
+}
+
 /**** logic Start ****/
 shuffleDeck();
+
+startTimer();
 
 DECK.addEventListener('click', e => {
     selectCard(e.target);
