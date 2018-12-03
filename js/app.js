@@ -92,7 +92,6 @@ function shuffleDeck() {
             flipCard(card);
         }
         CARD_FLIP_SOUND.play(); // putting this line of code in here instead of the flipCard function avoids annoying multiple audio plays if the player is playing too fast
-        startTimer();
     }, 2500);
 
 }
@@ -370,6 +369,10 @@ function rotateRestart() { // rotate the icon of restart button
 
 /**** logic Start ****/
 shuffleDeck();
+
+setTimeout(() => {
+    startTimer();
+}, 2500);
 
 DECK.addEventListener('click', e => {
     selectCard(e.target);
