@@ -94,16 +94,17 @@ function menuToggle() {
 // Deck Functions
 function shuffleDeck() {
 
-    DECK.innerHTML = '';
+    const FRAGMENT_DECK = document.createDocumentFragment(); // create a DocumentFragment to hold all cards
 
-    shuffledCards = shuffleCards(CARDS);
-
-    shuffledCards.forEach(shuffledCard => {
-        DECK.insertAdjacentHTML('beforeend', `
-            <li class="card" data-name="${shuffledCard}">
-                <i class="fa fa-${shuffledCard}">
-            </li>`);
+    shuffledCards.forEach(shuffledCard => { // create an element of each card then insert it inside the fragment
+        const CARD = document.createElement('li');
+        CARD.classList.add('card');
+        CARD.dataset.name = shuffledCard;
+        CARD.innerHTML = `<i class="fa fa-${shuffledCard}">`;
+        FRAGMENT_DECK.appendChild(CARD);
     });
+
+    DECK.appendChild(FRAGMENT_DECK); // insert all cards inside the deck for just 1 reflow/repaint
 
     setTimeout(() => { // wait for 1/2 second then show cards
         for (card of DECK.children) {
@@ -111,13 +112,13 @@ function shuffleDeck() {
         }
         CARD_FLIP_SOUND.play(); // putting this line of code in here instead of the flipCard function avoids annoying multiple audio plays if the player is playing too fast
     }, 500);
+
     setTimeout(() => { // hide cards after showing them for 2 seconds
         for (card of DECK.children) {
             flipCard(card);
         }
         CARD_FLIP_SOUND.play(); // putting this line of code in here instead of the flipCard function avoids annoying multiple audio plays if the player is playing too fast
     }, 2500);
-
 }
 
 // Card Functions
@@ -310,11 +311,15 @@ function twoCardsHint() { // hint at a pair of cards
 }
 
 function hintsNotify() { // update remaining hints
-    HINT_NOTIFICATION.innerHTML = 3 - hintCount;
-    HINT_NOTIFICATION.classList.toggle('flash'); // flash notification
-    setTimeout(() => {
-        HINT_NOTIFICATION.classList.toggle('flash');
-    }, 500);
+    if (!timerOn) { // the remaining hints should not decrease when game is over
+        return;
+    } else {
+        HINT_NOTIFICATION.innerHTML = 3 - hintCount;
+        HINT_NOTIFICATION.classList.toggle('flash'); // flash notification
+        setTimeout(() => {
+            HINT_NOTIFICATION.classList.toggle('flash');
+        }, 500);
+    }
 }
 
 function useHint() {
@@ -388,10 +393,10 @@ function highlightCard(e) { // highlighting a card on the grid
 }
 
 // Game Over Functions
-function gameWon() { // stop the timer ==> TODO: show modal
+function gameWon() { // stop the timer and then show a modal with the player's score
     stopTimer();
     fillModal();
-    setTimeout(() => { // wait for 1/2 second before showing modal to allow final cards pairing animation
+    setTimeout(() => { // wait for 1/2 second before showing modal to allow final cards pairing animation and sound to play
         toggleModal();
         GAME_WON_SOUND.play();
     }, 500);
@@ -441,7 +446,9 @@ RESTART.addEventListener('click', () => { // clicking the restart button restart
 });
 
 HINT.addEventListener('click', () => {
-    useHint();
+    if (timerOn) { // game has to begin before you can use hints
+        useHint();
+    }
 });
 
 MODAL_BACK.addEventListener('click', () => {
