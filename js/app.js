@@ -40,6 +40,12 @@ let timerOn = false;
 let time = 0;
 let timerId;
 
+// Hint Variables
+const HINT = document.querySelector('.hint');
+const HINT_NOTIFICATION = document.querySelector('.hint div');
+let hintedCard = '';
+let hintCount = 0;
+
 // Restart Variables
 const RESTART = document.querySelector('.restart');
 
@@ -212,6 +218,49 @@ function resetTimer() { // stop timer and then reset it
     TIMER.innerHTML = '00:00';
 }
 
+
+// Hint Functions
+function hintCard(card) { // shake the card to be hinted at
+    card.classList.toggle('hint');
+    setTimeout(()=> { // remove hint class from card after 1/2 second
+        card.classList.toggle('hint');
+    }, 500)
+}
+
+function oneCardHint() { // hint at the pair of a selected card
+    hintedCard = flippedCards[0]; // set the selected card as the hintedCard
+    for (card of DECK.children) { // loop through the existing cards on the deck
+        if (card.classList.value === 'card' && hintedCard.dataset.name === card.dataset.name) { // if we reach a card that is not selected or matched and if that card is the same as the card we have selected
+            hintCard(card); // hint at the card we reached
+            hintCount++;
+            hintedCard = '';
+            return;
+        }
+    }
+}
+
+function twoCardsHint() { // hint at a pair of cards
+    for (card of DECK.children) { // loop through the existing cards on the deck
+        if (card.classList.value === 'card' && hintedCard.length === 0) { // if we reach a card that is not matched and if no cards are selected set that card as the hinted card
+            hintedCard = card;
+        } else if (card.classList.value === 'card' && hintedCard.dataset.name === card.dataset.name) { // if we reach a card that is not matched and if that card is the pair of the hinted card then hint at both cards
+            hintCard(hintedCard);
+            hintCard(card);
+            hintCount++;
+            hintedCard = '';
+            return;
+        }
+    }
+}
+
+function useHint() {
+    if (flippedCards.length === 1 && hintCount < 3) { // if a card is selected and hints are left then hint at its pair
+        oneCardHint();
+    } else if (flippedCards.length === 0 && hintCount < 3) { // if no cards are selected and there are hints left then hint at a pair of cards
+        twoCardsHint();
+    }
+}
+
 // Game Over Functions
 function gameWon() { // stop the timer ==> TODO: show modal
     stopTimer();
@@ -247,4 +296,8 @@ DECK.addEventListener('click', e => {
 RESTART.addEventListener('click', () => { // clicking the restart button restarts the game and spins the icon
     restartGame();
     rotateRestart();
+});
+
+HINT.addEventListener('click', () => {
+    useHint();
 });
