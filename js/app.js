@@ -25,6 +25,11 @@ let shuffledCards = []
 let flippedCards = [];
 let pairsMatched = 0;
 
+// Stars Variables
+const THIRD_STAR = document.getElementById('third-star');
+const SECOND_STAR = document.getElementById('second-star');
+let starsCount = 3;
+
 // Moves Variables
 const MOVES = document.querySelector('.moves');
 let movesCount = 0;
@@ -83,6 +88,7 @@ function selectCard(card) {
         if (flippedCards.length === 2) { // when 2 cards are flipped
             addMove(); // increase moves counter
             checkMatch(); // check for a match between the two selected cards
+            removeStars('moves'); // check to see if removing a star is due
         }
     }
 }
@@ -107,6 +113,26 @@ function checkMatch() { // compare the two selected cards
             noMatchCard(flippedCards[1]);
             flippedCards = [];
         }, 1000);
+    }
+}
+
+// Stars Functions
+function removeStars(reason) {
+    let thirdStarStatus = THIRD_STAR.firstElementChild.classList.value; // register classList of the thirdStar to a variable
+    let secondStarStatus = SECOND_STAR.firstElementChild.classList.value; // register classList of the secondStar to a variable
+
+    if (reason === 'moves') { // reduce stars based on the moves count
+        /* minimum moves to win is 8, so:
+            * tolerate 3 mismatches and punish the fourth mismatch
+            * tolerate 9 mismatches and punish the tenth mismatch
+        */
+        if (movesCount === 12 && thirdStarStatus === 'fa fa-star') { // remove thirdStar if it's full and 12 moves have been made
+            THIRD_STAR.innerHTML = `<i class="fa fa-star-o"></i>`;
+            starsCount--;
+        } else if (movesCount === 18 && thirdStarStatus === 'fa fa-star-o' && secondStarStatus === 'fa fa-star') { // remove SecondStar if it's full and if thirdStar is empty and if 18 moves have been made
+            SECOND_STAR.innerHTML = `<i class="fa fa-star-o"></i>`;
+            starsCount--;
+        }
     }
 }
 
