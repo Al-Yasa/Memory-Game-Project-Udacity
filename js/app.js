@@ -118,6 +118,9 @@ function checkMatch() { // compare the two selected cards
             matchCard(flippedCards[1]);
             flippedCards = [];
             pairsMatched++;
+            if (pairsMatched === 8) { // if all cards are matched then it is game over
+                gameWon();
+            }
         }, 300)
     } else { // if no match then notify the player of the mismatch and flip the cards back
         setTimeout(() => { // wait for 200ms then make selected cards red
@@ -180,6 +183,16 @@ function startTimer() {
         seconds = time % 60;
         TIMER.innerHTML = seconds < 10 ? `0${minutes}:0${seconds}` : `0${minutes}:${seconds}`; // update time on the DOM
     }, 1000);
+}
+
+function stopTimer() { // stop timer
+    clearInterval(timerId);
+    timerOn = false;
+}
+
+// Game Over Functions
+function gameWon() { // stop the timer
+    stopTimer();
 }
 
 /**** logic Start ****/
