@@ -174,6 +174,15 @@ function removeStars(reason) {
             SECOND_STAR.innerHTML = `<i class="fa fa-star-o"></i>`;
             starsCount--;
         }
+
+    } else if (reason === 'hints') { // reduce stars based on the hints used
+        if (thirdStarStatus === 'fa fa-star') { // remove third star if it's full
+            THIRD_STAR.innerHTML = `<i class="fa fa-star-o"></i>`;
+            starsCount--;
+        } else if (thirdStarStatus === 'fa fa-star-o' && secondStarStatus === 'fa fa-star') { // remove second star if it's full, because third star is already removed
+            SECOND_STAR.innerHTML = `<i class="fa fa-star-o"></i>`;
+            starsCount--;
+        }
     }
 
 }
@@ -268,6 +277,9 @@ function useHint() {
     } else if (flippedCards.length === 0 && hintCount < 3) { // if no cards are selected and there are hints left then hint at a pair of cards
         twoCardsHint();
         hintsNotify(); // update remaining hints
+    }
+    if (hintCount === 2) { // remove a star when using the second hint
+        removeStars('hints');
     }
 }
 
