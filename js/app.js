@@ -49,6 +49,15 @@ let hintCount = 0;
 // Restart Variables
 const RESTART = document.querySelector('.restart');
 
+// Modal Variables
+const MODAL = document.querySelector('.modal-overlay');
+const MODAL_STARS =  document.querySelector('.modal-stars');
+const MODAL_MOVES = document.querySelector('.modal-moves');
+const MODAL_HINTS = document.querySelector('.modal-hints');
+const MODAL_TIME = document.querySelector('.modal-time');
+const MODAL_BACK = document.querySelector('.modal-back');
+const MODAL_REPLAY = document.querySelector('.modal-replay');
+
 /**** Functions ****/
 // Deck Functions
 function shuffleDeck() {
@@ -227,7 +236,6 @@ function resetTimer() { // stop timer and then reset it
     TIMER.innerHTML = '00:00';
 }
 
-
 // Hint Functions
 function hintCard(card) { // shake the card to be hinted at
     card.classList.toggle('hint');
@@ -287,9 +295,37 @@ function resetHintsNotify() { // resets number of hints to 3
     HINT_NOTIFICATION.innerHTML = 3;
 }
 
+// Modal Functions
+function fillModal() { // fill the modal with the player's score
+    if (starsCount === 3) { // fill modal with how many stars the player got
+        MODAL_STARS.innerHTML = `<i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>`;
+    } else if (starsCount === 2) {
+        MODAL_STARS.innerHTML = `<i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>`;
+    } else {
+        MODAL_STARS.innerHTML = `<i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>`;
+    }
+    MODAL_MOVES.innerHTML = `Your Moves <span>${movesCount}</span>`; // fill modal with how many moves the player has used in order to win
+    MODAL_HINTS.innerHTML = `Hints Used <span>${hintCount}</span>` // fill modal with how many hints the player has used
+    MODAL_TIME.innerHTML = `Your Time <span>${TIMER.innerHTML}</span>`; // fill modal with how much time it took the player to win
+}
+
+function toggleModal() {
+    MODAL.classList.toggle('hidden');
+}
+
 // Game Over Functions
 function gameWon() { // stop the timer ==> TODO: show modal
     stopTimer();
+    fillModal();
+    setTimeout(() => { // wait for 1/2 second before showing modal to allow final cards pairing animation
+        toggleModal();
+    }, 500);
 }
 
 // Restart Game Functions
@@ -328,4 +364,13 @@ RESTART.addEventListener('click', () => { // clicking the restart button restart
 
 HINT.addEventListener('click', () => {
     useHint();
+});
+
+MODAL_BACK.addEventListener('click', () => {
+    toggleModal();
+});
+
+MODAL_REPLAY.addEventListener('click', () => { // clicking the replay button hides the modal and restarts the game
+    toggleModal();
+    restartGame();
 });
