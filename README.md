@@ -4,15 +4,6 @@ This is a project for the Udacity Front-End Nanodegree called **Memory Game**.
 
 Check out this project on [GitHub Pages](https://al-yasa.github.io/Memory-Game-Project-Udacity/ "Memory Game - Belhenniche Al-Yasa'").
 
-## Table of Contents
-
-- [Description](#description)
-   - [Built With](#builtwith)
-   - [Game](#game)
-- [Instructions](#instructions)
-   - [How to Play](#howtoplay)
-   - [Keyboard Shortcuts](#keyboardshortcuts)
-
 ## Description
 
 ### Built With
