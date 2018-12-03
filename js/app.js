@@ -93,6 +93,12 @@ function menuToggle() {
 
 // Deck Functions
 function shuffleDeck() {
+    if (!DECK.innerHTML) { // if deck is already empty then do nothing (when first time running the game)
+    } else { // if deck has cards then empty it (when restarting game)
+        DECK.innerHTML = '';
+    }
+
+    shuffledCards = shuffleCards(CARDS); // make new shuffled list of cards
 
     const FRAGMENT_DECK = document.createDocumentFragment(); // create a DocumentFragment to hold all cards
 
