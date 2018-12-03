@@ -253,11 +253,21 @@ function twoCardsHint() { // hint at a pair of cards
     }
 }
 
+function hintsNotify() { // update remaining hints
+    HINT_NOTIFICATION.innerHTML = 3 - hintCount;
+    HINT_NOTIFICATION.classList.toggle('flash'); // flash notification
+    setTimeout(() => {
+        HINT_NOTIFICATION.classList.toggle('flash');
+    }, 500);
+}
+
 function useHint() {
     if (flippedCards.length === 1 && hintCount < 3) { // if a card is selected and hints are left then hint at its pair
         oneCardHint();
+        hintsNotify(); // update remaining hints
     } else if (flippedCards.length === 0 && hintCount < 3) { // if no cards are selected and there are hints left then hint at a pair of cards
         twoCardsHint();
+        hintsNotify(); // update remaining hints
     }
 }
 
