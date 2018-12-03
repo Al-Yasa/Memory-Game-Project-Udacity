@@ -271,6 +271,10 @@ function useHint() {
     }
 }
 
+function resetHintsNotify() { // resets number of hints to 3
+    HINT_NOTIFICATION.innerHTML = 3;
+}
+
 // Game Over Functions
 function gameWon() { // stop the timer ==> TODO: show modal
     stopTimer();
@@ -281,6 +285,8 @@ function restartGame() {
     resetStars();
     resetMoves();
     resetTimer();
+    resetHintsNotify();
+    hintCount = 0;
     pairsMatched = 0;
     flippedCards = [];
     shuffleDeck();
