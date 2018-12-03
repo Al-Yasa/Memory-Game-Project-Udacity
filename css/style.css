@@ -95,6 +95,77 @@ body {
     outline: 0;
 }
 
+@media all and (min-width: 800px) {
+    #start-menu {
+        font-size: 18px;
+    }
+
+    #start-menu .game-name {
+        letter-spacing: 2px;
+        font-size: 40px;
+    }
+
+    #start-menu .game-info {
+        padding: 0 30px;
+        flex-direction: row;
+    }
+
+    #start-menu .game-info p {
+        margin: 10px 0;
+    }
+
+    #start-menu .description {
+        margin: 0 20px 0 0;
+    }
+
+    #start-menu .description img {
+        max-width: 75%;
+        display: block;
+    }
+
+    #start-menu .instructions ul {
+        padding-left: 10px;
+    }
+
+    #start-menu .instructions li {
+        padding: 5px 0 5px 20px;
+    }
+
+    #start-menu .game-button {
+        justify-content: flex-end;
+    }
+
+    #start-menu .game-button button {
+        height: 75px;
+        width: 75px;
+    }
+}
+
+@media all and (min-width: 800px) and (max-height: 900px) {
+    #start-menu {
+        font-size: 14px;
+    }
+
+    #start-menu .game-name {
+        margin: 2px 0 0;
+        padding: 0;
+        font-size: 32px;
+    }
+
+    #start-menu .description img {
+        max-width: 70%;
+    }
+
+    #start-menu .game-button {
+        padding: 0 10px 10px;
+    }
+
+    #start-menu .game-button button {
+        height: 55px;
+        width: 55px;
+    }
+}
+
 /***** In-Game Content *****/
 .ingame-content {
     display: flex;
@@ -107,6 +178,13 @@ body {
     bottom: 0;
     right: 0;
     z-index: 1;
+}
+
+@media all and (min-width: 1000px) {
+    .ingame-content {
+        width: 60%;
+        margin: 0 auto;
+    }
 }
 
 /**** Score Panel ****/
@@ -139,6 +217,43 @@ body {
 #score-panel .moves,
 #score-panel .timer {
     flex: 1;
+}
+
+@media all and (min-width: 500px) {
+    #score-panel {
+        font-size: 20px;
+        padding: 0 12px;
+        height: 60px;
+    }
+
+    #score-panel .stars li {
+        font-size: 30px;
+        padding: 0 10px;
+    }
+}
+
+@media all and (min-width: 800px) {
+    #score-panel {
+        font-size: 25px;
+        padding: 0 15px;
+        height: 80px;
+    }
+
+    #score-panel .stars li {
+        font-size: 40px;
+    }
+}
+
+@media all and (min-width: 800px) and (max-height: 900px) {
+    #score-panel {
+        font-size: 20px;
+        padding: 0 10px;
+        height: 50px;
+    }
+
+    #score-panel .stars li {
+        font-size: 25px;
+    }
 }
 
 /**** Deck ****/
@@ -248,6 +363,63 @@ body {
     }
 }
 
+@media all and (min-width: 500px) {
+    #deck {
+        width: 500px;
+        min-height: 520px;
+        padding: 24px;
+    }
+
+    #deck .card {
+        height: 100px;
+        width: 100px;
+    }
+
+    #deck .card.show,
+    #deck .card.no-match,
+    #deck .card.match {
+        font-size: 28px;
+    }
+}
+
+@media all and (min-width: 800px) {
+    #deck {
+        width: 660px;
+        min-height: 680px;
+        padding: 32px;
+    }
+
+    #deck .card {
+        height: 125px;
+        width: 125px;
+    }
+
+    #deck .card.show,
+    #deck .card.no-match,
+    #deck .card.match {
+        font-size: 33px;
+    }
+}
+
+@media all and (min-width: 800px) and (max-height: 900px) {
+    #deck {
+        width: 440px;
+        min-height: 460px;
+        padding: 24px;
+    }
+
+    #deck .card {
+        height: 85px;
+        width: 85px;
+    }
+
+    #deck .card.show,
+    #deck .card.no-match,
+    #deck .card.match {
+        font-size: 24px;
+    }
+}
+
 /**** Tools Panel ****/
 #tools-panel {
     width: 100%;
@@ -322,6 +494,71 @@ body {
 
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@media all and (min-width: 500px) {
+    #tools-panel {
+        font-size: 20px;
+        padding: 0 5px 12px;
+        height: 60px;
+    }
+
+    #tools-panel .hint .notification {
+        right: -20%;
+        height: 35px;
+        width: 35px;
+        font-size: 25px;
+    }
+
+    #tools-panel .restart,
+    #tools-panel .hint {
+        width: 55px;
+        height: 55px;
+        padding-top: 8px;
+        font-size: 30px;
+    }
+}
+
+@media all and (min-width: 800px) {
+    #tools-panel {
+        font-size: 30px;
+        padding: 0 5px 15px;
+        height: 80px;
+    }
+
+    #tools-panel .hint .notification {
+        height: 40px;
+        width: 40px;
+        font-size: 30px;
+    }
+
+    #tools-panel .restart,
+    #tools-panel .hint {
+        width: 75px;
+        height: 75px;
+        padding-top: 10px;
+        font-size: 35px;
+    }
+}
+
+@media all and (min-width: 800px) and (max-height: 900px) {
+    #tools-panel {
+        height: 50px;
+    }
+
+    #tools-panel .hint .notification {
+        height: 35px;
+        width: 35px;
+        font-size: 25px;
+    }
+
+    #tools-panel .restart,
+    #tools-panel .hint {
+        width: 60px;
+        height: 60px;
+        padding-top: 10px;
+        font-size: 30px;
     }
 }
 
@@ -426,4 +663,54 @@ body {
     background-color: #fff;
     border: 2px solid #fff;
     color: #292929;
+}
+
+@media all and (min-width: 500px) {
+    #modal .modal-header {
+        margin: 15px 0 0;
+        padding: 10px 15px;
+        font-size: 40px;
+    }
+
+    #modal .modal-score {
+        padding: 10px 60px;
+    }
+
+    #modal .modal-score .modal-stars {
+        font-size: 50px;
+    }
+
+    #modal .modal-score .modal-stars i:not(:nth-child(2)) {
+        font-size: 40px;
+    }
+
+    #modal .modal-score .modal-moves,
+    #modal .modal-score .modal-hints,
+    #modal .modal-score .modal-time {
+        font-size: 22px;
+        padding: 10px 15px;
+        margin-bottom: 15px;
+    }
+
+    #modal .modal-score .modal-moves span,
+    #modal .modal-score .modal-hints span,
+    #modal .modal-score .modal-time span {
+        font-size: 30px;
+    }
+
+    #modal .modal-buttons {
+        padding: 30px 0;
+    }
+
+    #modal .modal-buttons button {
+        height: 70px;
+        width: 70px;
+        font-size: 40px;
+    }
+}
+
+@media all and (min-width: 800px) {
+    #modal {
+        width: 600px;
+    }
 }
